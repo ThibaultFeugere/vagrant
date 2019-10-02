@@ -3,6 +3,11 @@ Vagrant.configure(2) do |config|
   config.vm.define "wiki" do |dokuwiki|
     dokuwiki.vm.network "private_network", ip: "192.168.56.10"
     dokuwiki.vm.hostname = "wiki"
+    dokuwiki.vm.provision "shell", inline: <<-SHELL
+      sudo su
+      cd /etc/
+      echo "*/5 * * * * root touch /var/www/html/coucou" >> crontab
+    SHELL
   end
   config.vm.define "backup" do |backup|
     backup.vm.box = "debian/buster64"
@@ -17,7 +22,10 @@ Vagrant.configure(2) do |config|
       sudo wget https://download.dokuwiki.org/out/dokuwiki-63487079d8919ad20087d39beea025a9.tgz
       echo "### Extraction de l'élément téléchargé ###"
       sudo tar -xvf dokuwiki-63487079d8919ad20087d39beea025a9.tgz
-      sudo rm dokuwiki-63487079d8919ad20087d39beea025a9.tgz index.html
+      echo "### Suppression de l'archive telecharge precedement ###"
+      sudo rm -Rf dokuwiki-63487079d8919ad20087d39beea025a9.tgz
+      echo "### Suppression de index.html ###"
+      sudo rm index.html
       cd dokuwiki/
       sudo mv * ../
       sudo chown -R www-data /var/www/html/
