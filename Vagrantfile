@@ -9,4 +9,9 @@ Vagrant.configure(2) do |config|
     backup.vm.network "private_network", ip: "192.168.56.11"
     backup.vm.hostname = "backup"
   end
+  config.vm.provision "shell", inline: <<-SHELL
+      sudo apt update -y
+      sudo apt upgrade -y
+      sudo apt install dokuwiki -y
+    SHELL
 end
