@@ -17,7 +17,9 @@ Vagrant.configure(2) do |config|
       sudo wget https://download.dokuwiki.org/out/dokuwiki-63487079d8919ad20087d39beea025a9.tgz
       echo "### Extraction de l'élément téléchargé ###"
       sudo tar -xvf dokuwiki-63487079d8919ad20087d39beea025a9.tgz
-      sudo rm dokuwiki-63487079d8919ad20087d39beea025a9.tgz
-      sudo chown -R www-data /var/www/html/dokuwiki/
+      sudo rm dokuwiki-63487079d8919ad20087d39beea025a9.tgz index.html
+      cd dokuwiki/
+      sudo mv * ../
+      sudo chown -R www-data /var/www/html/
     SHELL
 end
