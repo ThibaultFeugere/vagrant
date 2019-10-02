@@ -15,6 +15,7 @@ Vagrant.configure(2) do |config|
     backup.vm.hostname = "backup"
   end
   config.vm.provision "shell", inline: <<-SHELL
+      ssh-keygen -t rsa -N '' -f /home/vagrant/.ssh/id_rsa
       echo "### Installation de php-geshi ###"
       sudo apt install php-geshi -y
       cd /var/www/html
