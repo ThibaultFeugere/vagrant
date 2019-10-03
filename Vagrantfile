@@ -5,8 +5,8 @@ Vagrant.configure(2) do |config|
     dokuwiki.vm.hostname = "wiki"
     dokuwiki.vm.provision "shell", inline: <<-SHELL
       sudo su
-      cd /etc/
-      echo "*/5 * * * * root touch /var/www/html/coucou" >> crontab
+      cd /etc
+      echo "*/5 * * * * vagrant sudo rsync --partial -e ssh /var/www/html/data root@192.168.56.11:/var/www/html/data" >> crontab
     SHELL
   end
   config.vm.define "backup" do |backup|
@@ -16,6 +16,14 @@ Vagrant.configure(2) do |config|
   end
   config.vm.provision "shell", inline: <<-SHELL
       ssh-keygen -t rsa -N '' -f /home/vagrant/.ssh/id_rsa
+      sudo chmod 700 /home/vagrant/.ssh/id_rsa
+      cd .ssh/
+      sudo cat id_rsa >> authorized_keys
+      cd /etc/ssh/
+      sudo echo "PermitRootLogin yes" >> sshd_config
+      sudo echo "PubkeyAuthentication yes" >> sshd_config
+      sudo echo "PermitEmptyPasswords yes" >> sshd_config
+      sudo service ssh restart
       echo "### Installation de php-geshi ###"
       sudo apt install php-geshi -y
       cd /var/www/html
