@@ -23,9 +23,6 @@ Vagrant.configure(2) do |config|
       cd .ssh/
       sudo cat id_rsa >> authorized_keys
       cd /etc/ssh/
-      sudo echo "PermitRootLogin yes" >> sshd_config
-      sudo echo "PubkeyAuthentication yes" >> sshd_config
-      sudo echo "PermitEmptyPasswords yes" >> sshd_config
       sudo service ssh restart
       echo "### Installation de php-geshi ###"
       sudo apt install php-geshi -y
