@@ -18,12 +18,13 @@ Vagrant.configure(2) do |config|
     backup.vm.hostname = "backup"
   end
   config.vm.provision "shell", inline: <<-SHELL
-      ssh-keygen -t rsa -N '' -f /home/vagrant/.ssh/id_rsa
-      sudo chmod 700 /home/vagrant/.ssh/id_rsa
-      cd .ssh/
-      sudo cat id_rsa >> authorized_keys
-      cd /etc/ssh/
-      sudo service ssh restart
+      sudo useradd -m -s /bin/bash -G www-data wiki
+      mkdir /home/wiki/.ssh
+      cp /vagrant/id_rsa /home/wiki/.ssh/
+      cat /vagrant/id_rsa.pub >> /home/wiki/.ssh/authorized_keys
+      chmod 700 /home/wiki/.ssh
+      chmod 600 /home/wiki/.ssh/*
+      chown -R wiki:wiki /home/wiki/.ssh
       echo "### Installation de php-geshi ###"
       sudo apt install php-geshi -y
       cd /var/www/html
