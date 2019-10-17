@@ -10,7 +10,7 @@ Vagrant.configure(2) do |config|
     dokuwiki.vm.provision "shell", inline: <<-SHELL
       sudo su
       cd /etc
-      echo "*/5 * * * * vagrant sudo rsync --partial -e ssh /var/www/html/data root@192.168.56.11:/var/www/html/data" >> crontab
+      echo "*/5 * * * * wiki rsync --partial -r -e 'ssh -i /home/wiki/.ssh/id_rsa' /var/www/html/ wiki@192.168.56.11:/var/www/html/data" >> crontab
     SHELL
   end
   config.vm.define "backup" do |backup|
