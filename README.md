@@ -162,12 +162,37 @@ tcp   LISTEN     0      100                                                     
 
 ### Connectez vous au host recursor-1,  quels sont les services réseaux qui sont en fonctionnement actuellement quels sont leur socket d'écoute ?
 
+```shell script
+tcp   LISTEN     0      128                                                                         *:111                                                                                     *:*                   users:(("rpcbind",pid=1270,fd=4),("systemd",pid=1,fd=66))
+tcp   LISTEN     0      128                                                             192.168.33.21:53                                                                                      *:*                   users:(("pdns_recursor",pid=5797,fd=7))
+tcp   LISTEN     0      128                                                                 127.0.0.1:53                                                                                      *:*                   users:(("pdns_recursor",pid=5797,fd=6))
+tcp   LISTEN     0      128                                                                         *:22                                                                                      *:*                   users:(("sshd",pid=2377,fd=3))
+tcp   LISTEN     0      100                                                                 127.0.0.1:25                                                                                      *:*                   users:(("master",pid=2589,fd=13))
+tcp   LISTEN     0      128                                                                        :::111                                                                                    :::*                   users:(("rpcbind",pid=1270,fd=6),("systemd",pid=1,fd=68))
+tcp   LISTEN     0      128                                                                        :::22                                                                                     :::*                   users:(("sshd",pid=2377,fd=4))
+tcp   LISTEN     0      100                                                                       ::1:25                                                                                     :::*  
+```
+
+- On peut voir qu'il y a le port 53 qui est le port DNS
+- Le port 25 qui est le SMTP (Simple Mail Transfer Protocol)
+- Le port 80 est le port du protocole HTTP
+- Le port 111 est le port SUN Remote Procedure Call
+- Le port 22 est le port ssh (auquel nous sommes connecté)
+
+Le port mysql n'est pas présent ce qui est normal.
+
 ### Où sont configuré chacuns de ces composants ?
 
-/etc/
+- Le composant Apache est configuré dans `cd /etc/apache2/`
+- Le composant MySQL est configuré dans `cd /etc/mysql/`
+- Le composant SMTP est configuré dans ``
+- Le composant SSH est configuré dans `cd /etc/ssh`
+- Le composant DNS est configuré dans ``
+- Le composant HTTP est configuré dans 
 
 ### Qu'est ce qui est configuré sur les serveurs recursifs pour le domaine lab.local ? (Important pour les Actions qui suivent)
 
 ### Comment mettre en évidence le fait que le récurseurs ne répondent que sur l’interface du réseaux back (192.168.33.0/24) ?
 
 ### Comment est sécurisé l’accès à mysql ?
+
