@@ -1,0 +1,1 @@
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/home/thibault/Documents/Linux/TP-Vagrant-files/tp1","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}
