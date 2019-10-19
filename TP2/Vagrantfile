@@ -18,6 +18,7 @@ Vagrant.configure(2) do |config|
     backup.vm.hostname = "backup"
   end
   config.vm.provision "shell", inline: <<-SHELL
+      sudo cp /vagrant/000-default.conf /etc/apache2/sites-available/
       sudo useradd -m -s /bin/bash -G www-data wiki
       mkdir /home/wiki/.ssh
       cp /vagrant/id_rsa /home/wiki/.ssh/
@@ -27,17 +28,18 @@ Vagrant.configure(2) do |config|
       chown -R wiki:wiki /home/wiki/.ssh
       echo "### Installation de php-geshi ###"
       sudo apt install php-geshi -y
-      cd /var/www/html
+      cd /var/www/html/
       echo "### Téléchargement de la dernière version de DokuWiki dans le dossier /var/www/html ###"
-      sudo wget https://download.dokuwiki.org/out/dokuwiki-63487079d8919ad20087d39beea025a9.tgz
+      sudo wget https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
       echo "### Extraction de l'élément téléchargé ###"
-      sudo tar -xvf dokuwiki-63487079d8919ad20087d39beea025a9.tgz
+      sudo tar -xvf dokuwiki-stable.tgz
       echo "### Suppression de l'archive telecharge precedement ###"
-      sudo rm -Rf dokuwiki-63487079d8919ad20087d39beea025a9.tgz
+      sudo rm -Rf dokuwiki-stable.tgz
       echo "### Suppression de index.html ###"
       sudo rm index.html
-      cd dokuwiki/
-      sudo mv * ../
+      sudo touch index.html
+      sudo echo "<h1>Site inconnu</h1>" >> index.html
       sudo chown -R www-data /var/www/html/
+      sudo /etc/init.d/apache2 restart
     SHELL
 end

@@ -28,7 +28,9 @@ Update : beaucoup plus clair grâce à ta correction, j'ai compris que tout le d
 
 ## Tp-https
 
-Work in progress
+On exporte la configuration de apache2 qui nous intéresse. On continue l'installation de Dokuwiki et on restart les services.
+
+On pense bien à créer un index.html avec pour contenu `site inconnu`.
 
 ## Td-dns
 
