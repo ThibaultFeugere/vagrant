@@ -194,7 +194,16 @@ Le port mysql n'est pas présent ce qui est normal.
 
 ### Qu'est ce qui est configuré sur les serveurs recursifs pour le domaine lab.local ? (Important pour les Actions qui suivent)
 
+Si nous faisons un `cat /etc/pdns-recursor/recursor.conf` et que nous recherchons la ligne qui concerne lab.local on peut trouver :
+
+`forward-zones=lab.local=192.168.56.31;192.168.56.32`
+
+Toutes les demandes et les requêtes effectuées sur la machine (lab local) seront envoyées a 192.168.56.31 et 192.168.56.32
+
 ### Comment mettre en évidence le fait que le récurseurs ne répondent que sur l’interface du réseaux back (192.168.33.0/24) ?
+
+Pas trouvé
 
 ### Comment est sécurisé l’accès à mysql ?
 
+Pas trouvé
